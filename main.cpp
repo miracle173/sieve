@@ -36,6 +36,13 @@ class nthfunclist {
         init_sieve();
         split_factors();
     }
+    int get_prime_factor(int number){
+        return sieve[number];
+    }
+
+    bool is_prime(int number){
+        return sieve[number]==number;
+    }
     private:
         int limit = _default_limit;
         int sqrtlimit;
@@ -282,6 +289,18 @@ int get_prime_factor(int number){
     return sieve[number];
 }
 
+int get_smallfactor1(int number){
+    return smallfactor1[number];
+}
+
+int get_primepowerfactor(int number){
+    return primepowerfactor[number];
+}
+
+int get_smallfactor2(int number){
+    return smallfactor2[number];
+}
+
 bool is_prime(int number){
     return sieve[number]==number;
 }
@@ -356,18 +375,21 @@ int main() {
             else {
                 std::cout << " * ";
             }
-            std::cout <<sieve[m];
-            m=m/sieve[m];
+            //std::cout <<sieve[m];
+            //m=m/sieve[m];
+            std::cout <<get_prime_factor(m);
+            m=m/get_prime_factor(m);
         }
         std::cout <<std::endl;
     }
-    std::cout<<std::endl<<"smallfactor * primepower * smallfactor\n"
+    std::cout<<"\nsmallfactor * primepower * smallfactor\n"
     <<"\tthe second factor is a prime power\n"
     <<"\t'!' at the end prime power exponent > 1\n";
 
     for (int n=limit-range;n<limit; n++){
-        std::cout<<n<<" = "<<smallfactor1[n]<<" * "<<primepowerfactor[n]<<" * "<<smallfactor2[n];
-        if (sieve[primepowerfactor[n]]!=primepowerfactor[n]){
+        std::cout<<n<<" = "<<get_smallfactor1(n)<<" * "<<get_primepowerfactor(n)<<" * "<<get_smallfactor2(n);
+        //if (get_prime_factor(primepowerfactor[n])!=primepowerfactor[n]){
+        if (!is_prime(get_primepowerfactor(n))){
             std::cout<<" !";
         }
         std::cout<<std::endl;
